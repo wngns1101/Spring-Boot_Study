@@ -1,0 +1,25 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>이름</th>
+                </tr>
+            </thead>
+            <tbody>
+<!--                타임리프 문법 자바의 foreach와 같은 느낌-->
+<!--                여기서의 members는 컨트롤러에서 addAttribute로 넘겨준 모델을 의미-->
+                <tr th:each="member: ${members}">
+                    <td th:text="${member.id}"></td>
+                    <td th:text="${member.name}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
