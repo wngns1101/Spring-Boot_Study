@@ -7,20 +7,17 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 
-public class jdbcTemplateMemberRepository implements MemberRepository{
+public class JdbcTemplateMemberRepository implements MemberRepository{
     private final JdbcTemplate jdbcTemplate;
 
     // 생성자가 하나면 autowrired 생략 가능
-    public jdbcTemplateMemberRepository(DataSource dataSource) {
+    public JdbcTemplateMemberRepository(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
     @Override
