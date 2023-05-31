@@ -19,15 +19,22 @@ repositories {
 }
 
 dependencies {
+	// spring boot가 지원하지 않는 라이브러리는 버전을 표시함
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// 개발을 편리하게 도와주는 툴로서 서버를 재가동하지 않아도 해당되는 뷰 파일을 리컴파일하면 변동사항 적용
 	implementation 'org.springframework.boot:spring-boot-devtools'
+	// 쿼리 파라미터를 로그에 표시해주는 외부 라이브러리
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+	testImplementation 'junit:junit:4.13.1'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation("org.junit.vintage:junit-vintage-engine") {
+		exclude group: "org.hamcrest", module: "hamcrest-core"
+	}
 }
 
 tasks.named('test') {
