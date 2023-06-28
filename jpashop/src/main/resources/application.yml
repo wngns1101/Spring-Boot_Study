@@ -3,7 +3,7 @@
 spring:
   datasource:
 #    MVCC=TRUE 옵션을 넣으면 데이터베이스에 여러개가 접근했을 때 조금 더 빠르다
-    url: jdbc:h2:tcp://localhost/~/jpashop
+    url: jdbc:h2:tcp://localhost/~/jpashop;
     password:
     driver-class-name: org.h2.Driver
     username: sa
