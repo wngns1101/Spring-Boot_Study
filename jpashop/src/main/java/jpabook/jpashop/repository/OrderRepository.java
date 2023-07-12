@@ -33,7 +33,7 @@ public class OrderRepository {
         if (orderSearch.getOrderStatus() != null) {
             if (isFirstCondition) {
                 jpql += " where";
-                isFirstCondition = false
+                isFirstCondition = false;
             } else{
                 jpql += " and";
             }
