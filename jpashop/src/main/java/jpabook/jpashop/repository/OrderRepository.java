@@ -37,7 +37,7 @@ public class OrderRepository {
             } else{
                 jpql += " and";
             }
-            jpql += "o.stauts = :status";
+            jpql += " o.status = :status";
         }
 
         if (StringUtils.hasText(orderSearch.getMemberName())) {
