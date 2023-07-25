@@ -45,8 +45,8 @@ public class OrderService {
         orderRepository.save(order);
         return order.getId();
     }
-    // 취소
 
+    // 취소
     @Transactional
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findOne(orderId);

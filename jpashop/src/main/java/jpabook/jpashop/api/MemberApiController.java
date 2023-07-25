@@ -3,6 +3,7 @@ package jpabook.jpashop.api;
 import jakarta.validation.Valid;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.service.MemberService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -33,8 +34,28 @@ public class MemberApiController {
         return new CreateMemberResponse(id);
     }
 
+    @PutMapping("/api/v2/members/{id}")
+    public UpdateMemberResponse updateMemberV2(@PathVariable("id") Long id, @RequestBody @Valid UpdateMemberRequeest request) {
+        memberService.update(id, request.getName());
+        Member findMember = memberService.findOne(id);
+        return new UpdateMemberResponse(findMember.getId(), findMember.getName());
+    }
+
+    @Data
+    static class UpdateMemberRequeest {
+        private String name;
+    }
+
+    @Data
+    @AllArgsConstructor
+    // 생성자 자동으로 받는 어노테이션
+    static class UpdateMemberResponse {
+        private Long id;
+        private String name;
+    }
     @Data
     static class CreateMemberRequest {
+
         private String name;
     }
 
