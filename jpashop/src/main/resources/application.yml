@@ -11,7 +11,7 @@ spring:
   jpa:
     hibernate:
 #       application 생성 시점에 테이블 정보를 다 지우고 Entity를 기반으로 다시 생성
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
 #       show_sql은 system.out에서 출력된다.
