@@ -24,7 +24,6 @@ public class Member {
     @Embedded
     private Address address;
 
-    // api에 노출 안 시킨다
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 }
