@@ -42,20 +42,6 @@ public class initDb {
             em.persist(order);
         }
 
-        private static Delivery createDelivery(Member member) {
-            Delivery delivery = new Delivery();
-            delivery.setAddress(member.getAddress());
-            return delivery;
-        }
-
-        private static Book createBook(String name, int price, int stockQuantity) {
-            Book book1 = new Book();
-            book1.setName(name);
-            book1.setPrice(price);
-            book1.setStockQuantity(stockQuantity);
-            return book1;
-        }
-
         public void dbInit2() {
             Member member = createMember("userB", "진주", "2", "2222");
             em.persist(member);
@@ -79,6 +65,20 @@ public class initDb {
             member.setName(name);
             member.setAddress(new Address(city, street, zipcode));
             return member;
+        }
+
+        private static Delivery createDelivery(Member member) {
+            Delivery delivery = new Delivery();
+            delivery.setAddress(member.getAddress());
+            return delivery;
+        }
+
+        private static Book createBook(String name, int price, int stockQuantity) {
+            Book book1 = new Book();
+            book1.setName(name);
+            book1.setPrice(price);
+            book1.setStockQuantity(stockQuantity);
+            return book1;
         }
 
     }

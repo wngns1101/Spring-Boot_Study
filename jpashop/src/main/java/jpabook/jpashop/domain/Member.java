@@ -25,7 +25,6 @@ public class Member {
     private Address address;
 
     // api에 노출 안 시킨다
-    @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 }
