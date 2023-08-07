@@ -107,4 +107,24 @@ public class OrderRepository {
                 " join o.member m" +
                 " join o.delivery d", OrderSimpleQueryDto.class).getResultList();
     }
+
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                // jpa에서는 같은 id면 중복을 제거해줌
+                "select distinct o from Order o" +
+                 " join fetch o.member m" +
+                 " join fetch o.delivery d" +
+                 " join fetch o.orderItems oi" +
+                 " join fetch oi.item i", Order.class).getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
 }
