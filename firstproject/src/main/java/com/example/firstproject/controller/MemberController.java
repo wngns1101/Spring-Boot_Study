@@ -35,7 +35,7 @@ public class MemberController {
         Member save = memberRepository.save(entity);
 //        System.out.println(save.toString());
         log.info(save.toString());
-        return "";
+        return "redirect:/members";
     }
 
     @GetMapping("/members/{id}")
@@ -50,5 +50,24 @@ public class MemberController {
         List<Member> memberList = (List<Member>)memberRepository.findAll();
         model.addAttribute("memberList", memberList);
         return "member/index";
+    }
+
+    @GetMapping("/members/{id}/edit")
+    public String edit(@PathVariable Long id, Model model){
+        Member member = memberRepository.findById(id).orElse(null);
+        model.addAttribute("member", member);
+        return "member/edit";
+    }
+
+    @PostMapping("/member/update")
+    public String update(MemberForm memberForm){
+        log.info(memberForm.toString());
+        Member member = memberForm.toEntity();
+
+        Member member1 = memberRepository.findById(member.getId()).orElse(null);
+        if (member1 != null){
+            memberRepository.save(member);
+        }
+        return "redirect:/members/" + member1.getId();
     }
 }
