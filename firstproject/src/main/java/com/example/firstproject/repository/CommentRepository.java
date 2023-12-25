@@ -11,4 +11,6 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query(value = "select * from comment where article_id = :articleId", nativeQuery = true)
     List<Comment> findByArticleId(Long articleId);
+
+    List<Comment> findByNickname(String nickname);
 }
