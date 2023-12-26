@@ -3,7 +3,8 @@
         <div class="card m-2" id="comments-{{id}}">
             <div class="card-header">
                 {{nickname}}
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#comment-edit-modal">수정</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#comment-edit-modal" data-bs-id="{{id}}" data-bs-nickname="{{nickname}}" data-bs-body="{{body}}" data-bs-article-id="{{articleId}}">수정</button>
+                <button type="button" class="btn btn-sm btn-outline-danger comment-delete-btn" data-comment-id="{{id}}">삭제</button>
                 <!-- Modal -->
                 <div class="modal fade" id="comment-edit-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -43,3 +44,70 @@
         </div>
     {{/commentDtos}}
 </div>
+<script>
+    {
+        const commentEditModal = document.querySelector("#comment-edit-modal");
+        commentEditModal.addEventListener("show.bs.modal", function(event){
+            const triggerBtn = event.relatedTarget;
+            const id = triggerBtn.getAttribute("data-bs-id")
+            const nickname = triggerBtn.getAttribute("data-bs-nickname")
+            const body = triggerBtn.getAttribute("data-bs-body")
+            const articleId = triggerBtn.getAttribute("data-bs-article-id")
+
+            document.querySelector("#edit-comment-nickname").value = nickname;
+            document.querySelector("#edit-comment-body").value = body;
+            document.querySelector("#edit-comment-id").value = id;
+            document.querySelector("#edit-comment-article-id").value = articleId;
+        });
+    }
+    {
+        const commentUpdateBtn = document.querySelector("#comment-update-btn");
+        commentUpdateBtn.addEventListener("click", function(){
+            const comment = {
+                id: document.querySelector("#edit-comment-id").value,
+                nickname: document.querySelector("#edit-comment-nickname").value,
+                body: document.querySelector("#edit-comment-body").value,
+                article_id: document.querySelector("#edit-comment-article-id").value
+            };
+            console.log(comment);
+            const url = "/api/comments/" + comment.id;
+            fetch(url, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(comment)
+            }).then(response => {
+                const msg = (response.ok) ? "댓글이 수정됐습니다." : "댓글 수정 실패!!";
+                alert(msg)
+                window.location.reload()
+            })
+        });
+    }
+</script>
+<script>
+    const commentDeleteBtns = document.querySelectorAll(".comment-delete-btn");
+
+    commentDeleteBtns.forEach(btn => {
+        btn.addEventListener("click", (event) => {
+            const commentDeleteBtn = event.target;
+            const commentId = commentDeleteBtn.getAttribute("data-comment-id");
+
+            console.log(`DELETE BUTTON ${commentId}`)
+            const url = `/api/comments/${commentId}`;
+            fetch(url, {
+                method: "DELETE"
+            }).then(response => {
+                if(!response.ok){
+                    alert("failed delete comment");
+                    return;
+                }
+                const target = document.querySelector(`#comments-${commentId}`);
+                target.remove();
+                const msg = `${commentId} comment removed` ;
+                alert(msg);
+                window.location.reload();
+            })
+        });
+    });
+</script>
